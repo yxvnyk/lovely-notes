@@ -1,0 +1,115 @@
+/* Love Runner — all rules scoped to .game / game-specific hooks. Site palette tokens come from styles.css :root. */
+.cta[hidden],.game[hidden]{display:none!important}
+button.cta{border:0;appearance:none;-webkit-appearance:none}
+.cta.g-reveal{animation:g-cta-in .7s cubic-bezier(.2,.9,.3,1.2) both}
+@keyframes g-cta-in{from{opacity:0;transform:scale(.7)}to{opacity:1;transform:scale(1)}}
+
+/* page reacts to game state */
+html.js .stage.game-on .greet,html.js .stage.game-on .warn{opacity:0;visibility:hidden;transition:opacity .4s ease,visibility 0s .4s}
+.stage.game-won .cta-wrap{align-items:start;align-content:start;gap:8px;padding-top:max(12px,3vh)}
+.stage.game-won .thanks{top:calc(max(12px,3vh) + var(--btn-h) + 8px + 44px + 12px)}
+.stage.game-won .game{transform:translate(-50%,-42%) scale(.86)}
+.key-row{pointer-events:auto;justify-self:center}
+.key-row[hidden]{display:none}
+.g-key{width:min(200px,70vw);height:40px;padding:0 1em;border:0;border-radius:999px;background:rgba(255,241,246,.92);color:#590D28;font:600 16px/1 var(--font);text-align:center;outline:none}
+.g-key::placeholder{color:#a05a72}
+.g-key:focus-visible{outline:3px solid #FFE6EE;outline-offset:2px}
+
+.game{--g-sky-a:#FFD3E0;--g-sky-b:#F7B6C8;--g-ground:#7A1636;--g-edge:#FF5C86;--g-cloud:#FFF1F6;--g-red:#FF334F;--g-ink:#590D28;
+  position:absolute;left:50%;top:50%;z-index:8;width:min(92vw,760px,calc(60vh*var(--ar,1.78)));aspect-ratio:var(--ar,1.78);
+  border-radius:clamp(16px,3vw,28px);overflow:hidden;background:linear-gradient(180deg,var(--g-sky-a),var(--g-sky-b));
+  box-shadow:0 14px 36px rgba(0,0,0,.3);touch-action:none;user-select:none;-webkit-user-select:none;-webkit-tap-highlight-color:transparent;
+  font-family:var(--font);opacity:0;transform:translate(-50%,-50%) scale(.94);transition:opacity .5s ease,transform .6s cubic-bezier(.2,.9,.3,1.1)}
+.game.is-open{opacity:1;transform:translate(-50%,-50%)}
+
+.game .g-world{position:absolute;left:0;top:0;transform-origin:0 0}
+.game .g-world>*{position:absolute;pointer-events:none}
+.game .g-world>.g-heart{pointer-events:auto}
+
+.game .g-ground{left:0;background:var(--g-ground);border-top:6px solid var(--g-edge);box-sizing:border-box}
+.game .g-ground-in{left:0;height:14px;margin-top:6px;background:repeating-linear-gradient(90deg,rgba(255,225,235,.28) 0 10px,transparent 10px 80px);will-change:transform}
+.game .g-cloud{left:0;width:110px;height:36px;border-radius:40px;background:var(--g-cloud);opacity:.9;will-change:transform}
+.game .g-cloud::before,.game .g-cloud::after{content:"";position:absolute;border-radius:50%;background:var(--g-cloud)}
+.game .g-cloud::before{width:54px;height:54px;left:18px;top:-24px}
+.game .g-cloud::after{width:40px;height:40px;left:58px;top:-14px}
+.game .g-fh{top:100%;width:var(--s,16px);height:var(--s,16px);background:#FF7FA0;opacity:0;-webkit-mask:var(--heart) center/contain no-repeat;mask:var(--heart) center/contain no-repeat;animation:g-float 8s linear infinite}
+@keyframes g-float{0%{transform:translateY(0);opacity:0}15%{opacity:.5}100%{transform:translateY(-520px);opacity:0}}
+.game[data-state=dead] .g-fh,.game[data-state=won] .g-fh{animation-play-state:paused}
+
+.game .g-finish{left:0;width:6px;border-radius:3px;background:repeating-linear-gradient(180deg,#fff 0 10px,var(--g-red) 10px 20px);transition:opacity .4s}
+.game .g-finish::after{content:"🏁";position:absolute;top:-30px;left:-4px;font-size:28px;line-height:1}
+.game .g-ob{left:0;top:0;text-align:center;will-change:transform;font-family:"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif}
+.game .g-hero{left:0;top:0;transform-origin:50% 100%;will-change:transform}
+.game .g-hero img{display:block;width:100%;height:100%;image-rendering:pixelated;transform-origin:50% 100%;transition:transform .35s ease;-webkit-user-drag:none}
+.game .g-hero.is-dead img{transform:rotate(-78deg) translate(8px,14px)}
+
+.game .g-heart{left:0;top:0;cursor:pointer;touch-action:none;will-change:transform}
+.game .g-heart::before{content:"";position:absolute;inset:-12%}
+.game .g-heart-in,.game .g-fx{background:var(--c,#FF334F);-webkit-mask:var(--heart) center/contain no-repeat;mask:var(--heart) center/contain no-repeat}
+.game .g-heart-in{position:absolute;inset:0;animation:g-beat 1.3s ease-in-out infinite}
+@keyframes g-beat{0%,100%{transform:scale(1)}50%{transform:scale(1.07)}}
+.game .g-fx{left:0;top:0;opacity:0}
+.game .g-plus{left:0;top:0;font:800 22px/1 var(--font);color:var(--g-ink);text-shadow:0 1px 0 rgba(255,255,255,.7)}
+.game .g-flash{inset:0;background:#fff;opacity:0}
+.game .g-flash.go{animation:g-flash .8s ease-out}
+@keyframes g-flash{0%{opacity:0}12%{opacity:.85}100%{opacity:0}}
+
+/* HUD & overlays (outside the scaled world, crisp text) */
+.game .g-hud{position:absolute;inset:0;pointer-events:none}
+.game .g-progress{position:absolute;left:5%;right:64px;top:12px;height:10px;border-radius:99px;background:rgba(89,13,40,.18);overflow:hidden;transition:opacity .4s}
+.game .g-progress i{display:block;height:100%;background:var(--g-red);border-radius:99px;transform:scaleX(0);transform-origin:0 50%}
+.game[data-state=collect] .g-progress,.game[data-state=won] .g-progress{opacity:0}
+.game .g-score,.game .g-combo{position:absolute;top:10px;padding:.2em .75em;border-radius:99px;font-weight:800;font-size:clamp(1rem,2.6vw,1.4rem);opacity:0;transition:opacity .3s}
+.game .g-score{left:10px;background:rgba(255,241,246,.9);color:var(--g-ink)}
+.game .g-combo{right:60px;background:var(--g-red);color:#fff}
+.game[data-state=collect] .g-score,.game[data-state=won] .g-score,.game .g-combo.on{opacity:1}
+.game .g-hint{position:absolute;left:0;right:0;top:30%;margin:0;text-align:center;font-weight:700;color:var(--g-ink);font-size:clamp(.95rem,2.4vw,1.25rem);opacity:0;transition:opacity .4s;pointer-events:none}
+.game .g-hint.show{opacity:.85}
+.game .g-over,.game .g-win{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.7rem;padding:1rem;text-align:center;opacity:0;visibility:hidden;transition:opacity .4s ease .45s,visibility 0s .85s}
+.game .g-over{background:rgba(89,13,40,.62);color:#FFE6EE}
+.game .g-over.show,.game .g-win.show{opacity:1;visibility:visible;transition-delay:.45s,0s}
+.game .g-win{pointer-events:none;transition-delay:.3s,0s}
+.game .g-win.show{transition-delay:.3s,0s}
+.game .g-over-title,.game .g-win-title{margin:0;font-weight:800;font-size:clamp(1.5rem,5vw,2.6rem);line-height:1.1}
+.game .g-over-text{margin:0;font-size:clamp(1rem,2.8vw,1.3rem);font-weight:600}
+.game .g-win p{margin:0}
+.game .g-win-box{background:rgba(255,241,246,.92);color:var(--g-ink);border-radius:20px;padding:1rem 1.4rem;max-width:90%}
+.game .g-win-sub{margin-top:.3rem!important;font-weight:600;font-size:clamp(.95rem,2.6vw,1.2rem)}
+.game .g-btn{min-height:52px;padding:0 1.8em;border:0;border-radius:999px;background:var(--g-red);color:#fff;font:800 1.1rem/1 var(--font);cursor:pointer;box-shadow:0 6px 16px rgba(0,0,0,.3);transition:transform .15s ease,background-color .2s}
+.game .g-btn:hover{background:#ff4a63}.game .g-btn:active{transform:scale(.96)}
+.game .g-btn:focus-visible{outline:3px solid #FFE6EE;outline-offset:3px}
+
+@media (prefers-reduced-motion:reduce){
+  .game,.game .g-over,.game .g-win{transition-duration:.01s!important;transition-delay:0s!important}
+  .game .g-fh,.game .g-heart-in{animation:none}
+  .game .g-flash.go{animation:none}
+  .cta.g-reveal{animation:none}
+}
+
+/* ---- music-driven layers & photo obstacles ---- */
+.game .g-ob{object-fit:fill;image-rendering:pixelated;filter:drop-shadow(0 0 5px rgba(255,255,255,.75));-webkit-user-drag:none;font-size:0}
+.game .g-sky2{left:0;top:0;opacity:0;background:linear-gradient(180deg,#59102c 0%,#B3264F 55%,#FF7FA0 100%)}
+.game .g-rays{opacity:0;border-radius:50%;background:repeating-conic-gradient(from 0deg,rgba(255,225,235,.28) 0 7deg,transparent 7deg 22deg);animation:g-spin 50s linear infinite;will-change:transform}
+@keyframes g-spin{to{transform:rotate(360deg)}}
+.game .g-hills{left:0;opacity:0;background-repeat:repeat-x;background-size:400px 100%;will-change:transform}
+.game .g-h1{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 120' preserveAspectRatio='none'%3E%3Cpath d='M0 120V78Q50 22 110 58T230 44T330 66T400 78V120Z' fill='%23FF7FA0' fill-opacity='.55'/%3E%3C/svg%3E")}
+.game .g-h2{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 84' preserveAspectRatio='none'%3E%3Cpath d='M0 84V50Q70 6 140 42T290 30T400 50V84Z' fill='%23C98CA0' fill-opacity='.7'/%3E%3C/svg%3E")}
+.game .g-pulse{left:0;top:0;opacity:0;background:radial-gradient(ellipse at 50% 85%,rgba(255,225,235,.9),rgba(255,225,235,0) 65%)}
+.game .g-shape{left:0;top:0;opacity:0;background:#FFF1F6;clip-path:polygon(50% 0,100% 50%,50% 100%,0 50%);will-change:transform}
+.game .g-shape.tri{clip-path:polygon(50% 0,100% 100%,0 100%)}
+.game .g-over-img{width:clamp(56px,16%,96px);height:auto;image-rendering:pixelated;margin:0;filter:drop-shadow(0 0 6px rgba(255,255,255,.6))}
+.game .g-mute{position:absolute;top:4px;right:4px;width:44px;height:44px;border:0;border-radius:50%;background:rgba(255,241,246,.85);color:var(--g-ink);font-size:1.15rem;line-height:1;cursor:pointer;z-index:2;touch-action:manipulation;-webkit-tap-highlight-color:transparent}
+.game .g-mute:focus-visible{outline:3px solid var(--g-red);outline-offset:2px}
+@media (prefers-reduced-motion:reduce){.game .g-rays{animation:none}}
+
+/* ---- flying obstacles, splashes ---- */
+.game .g-fly{filter:none}
+.game .g-fly img{display:block;width:100%;height:100%;image-rendering:pixelated;filter:drop-shadow(0 0 7px rgba(255,255,255,.85))}
+.game .g-wing{top:26%;width:34px;height:18px;background:#fff;opacity:.95;border:2px solid rgba(89,13,40,.35);box-sizing:border-box}
+.game .g-wing.l{left:-28px;border-radius:70% 0 70% 0;transform-origin:100% 80%;animation:g-flap-l .26s ease-in-out infinite alternate}
+.game .g-wing.r{right:-28px;border-radius:0 70% 0 70%;transform-origin:0 80%;animation:g-flap-r .26s ease-in-out infinite alternate}
+@keyframes g-flap-l{from{transform:rotate(-24deg)}to{transform:rotate(18deg)}}
+@keyframes g-flap-r{from{transform:rotate(24deg)}to{transform:rotate(-18deg)}}
+.game .g-fshadow{left:10%;width:80%;height:10px;border-radius:50%;background:rgba(89,13,40,.35)}
+.game .g-splash{left:0;top:0;opacity:0}
+@media (prefers-reduced-motion:reduce){.game .g-wing{animation:none}}

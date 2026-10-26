@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>psst… this is for you 🎀</title>
+<meta name="description" content="A little digital love letter.">
+<meta name="theme-color" content="#590D28">
+<meta name="color-scheme" content="dark">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%23FF334F' d='M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z'/%3E%3C/svg%3E">
+<script>document.documentElement.classList.add('js')</script>
+<noscript><style>.cta[hidden]{display:inline-flex!important}#play{display:none}</style></noscript>
+<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="game.css">
+</head>
+<body>
+<main class="stage">
+  <p class="sr-only">Love is… written in 65 languages.</p>
+  <div id="marquee" class="marquee reveal" aria-hidden="true"></div>
+  <div id="fx" class="fx" aria-hidden="true"></div>
+
+  <p class="greet reveal" id="greet">psst… this is for you! 🎀</p>
+
+  <div class="cta-wrap">
+    <button id="play" class="cta reveal" type="button">Play ▶</button>
+    <a id="cta" class="cta reveal" href="downloads/love.zip" download="love.zip" hidden>Download with Love 💗</a>
+    <div id="keyRow" class="key-row" hidden><input id="keyInput" class="g-key" type="text" autocomplete="off" autocapitalize="none" spellcheck="false" lang="ru" maxlength="32" placeholder="secret word" aria-label="Secret word (optional)"></div>
+  </div>
+
+  <p class="warn reveal" id="warn">warning: contains excessive love 💗</p>
+  <p class="thanks" id="thanks" aria-live="polite"></p>
+
+
+  <section id="game" class="game" aria-label="Love runner mini-game" data-state="idle" hidden>
+    <div class="g-world">
+      <div class="g-ground"></div>
+      <div class="g-ground-in"></div>
+      <div class="g-finish"></div>
+      <div class="g-hero"><img src="assets/hero.png" alt="" draggable="false"></div>
+      <div class="g-flash"></div>
+    </div>
+    <div class="g-hud" aria-hidden="true">
+      <div class="g-progress"><i></i></div>
+      <div class="g-score">0/100</div>
+      <div class="g-combo"></div>
+    </div>
+    <button class="g-mute" type="button" aria-label="Mute music" aria-pressed="false">🔊</button>
+    <p class="g-hint" aria-live="polite"></p>
+    <div class="g-over">
+      <img class="g-over-img" alt="" draggable="false">
+      <p class="g-over-title">Oops!</p>
+      <p class="g-over-text"></p>
+      <button class="g-btn g-again" type="button">Play Again</button>
+    </div>
+    <div class="g-win" role="status">
+      <div class="g-win-box">
+        <p class="g-win-title">100/100 💗</p>
+        <p class="g-win-sub">you collected every piece of my heart — your gift is ready 💌</p>
+      </div>
+    </div>
+  </section>
+
+  <p class="egg-msg" id="eggMsg" lang="ru" aria-live="polite"></p>
+  <button id="egg" class="egg" type="button" aria-label="A tiny secret heart. Activate to reveal a hidden message.">
+    <span class="egg-heart" aria-hidden="true"></span>
+  </button>
+  <p class="sig" lang="ru">«Для моей Любви»</p>
+</main>
+<script src="languages.js"></script>
+<script src="script.js"></script>
+<script src="game.js"></script>
+</body>
+</html>
