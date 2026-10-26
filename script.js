@@ -3,11 +3,11 @@
 
   /* ===== CONFIG — change these if your ZIP has a different name ===== */
   const CONFIG = {
-    zipPath: 'downloads/love.zip',   // relative to index.html (never start with "/")
-    fileName: 'love.zip'             // name the browser saves it as
+    zipPath: "https://github.com/yxvnyk/lovely-notes/releases/download/download-v1/Lovely.Notes.7z",   // relative to index.html (never start with "/")
+    fileName: "Lovely Notes.zip"             // name the browser saves it as
   };
   const THANKS = 'a little piece of my heart, just for you 💌';
-  const SECRET = '«Для моей Любви»';
+  const SECRET = '💞';
   /* ================================================================== */
 
   const $ = (s) => document.querySelector(s);
